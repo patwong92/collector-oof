@@ -46,11 +46,15 @@ const isFoil = (condition: boolean): string => {
 export const MTGCollection: React.FC<{}> = () => {
   return (
     <div>
-      ${data.map(e => {
+      <h1>My collection</h1>
+      {data.map(e => {
         return (
-          <div>
-              {e.name}, {e.num}, {e.expansion}, {e.rarity}, {isFoil(e.foil)} {e.price}
-          </div>
+          <table>
+              <tr>
+                <td><img alt={e.name} src={e.image} /></td>
+                <td><div>{e.name}, {e.num}, {e.expansion}, {e.rarity}, {isFoil(e.foil)} {e.price}</div></td>
+              </tr>
+          </table>
         )
       })}
     </div>
