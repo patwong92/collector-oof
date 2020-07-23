@@ -7,7 +7,7 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "client": "npm start --prefix client",
     "server": "nodemon server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -20,8 +20,12 @@
   },
   "homepage": "https://github.com/patwong92/my-mtg-collection#readme",
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "cheerio": "^1.0.0-rc.3",
     "concurrently": "^5.2.0",
     "express": "^4.17.1",
+    "express-async-await": "^1.1.0",
+    "node-fetch": "^2.6.0",
     "nodemon": "^2.0.4"
   }
 }
