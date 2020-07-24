@@ -19,11 +19,11 @@ router.get('/:name', async(req, res) => {
     let instock = rawdata.find('.product-price').length;
 
     if (instock == 1) {
-      res.send(fmtPrice(rawdata.find('.product-price').text().trim()));
+      res.json({ price: fmtPrice(rawdata.find('.product-price').text().trim()) });
     } else if (instock == 0) {
-      res.send(fmtPrice(rawdata.find('.no-stock').find('.price').text().trim()));
+      res.send({ price: fmtPrice(rawdata.find('.no-stock').find('.price').text().trim()) });
     } else {
-      res.send('0');
+      res.send({ price: '0'});
     }
   }
 

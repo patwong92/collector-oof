@@ -9,6 +9,10 @@ app.use(express.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use('/api/check', require('./api/cardprice'));
 
+app.get('/logic', (req, res) => {
+  res.send({name: 'logic'});
+})
+
 app.get('/', (req, res) => {
   res.send('Hello world!');
 })

@@ -1,8 +1,9 @@
 import React from 'react';
 import './styles/MTGCollection.scss'
+import {CardPrice} from './CardPrice';
 
 type Rarity = 'M' | 'R' | 'U' | 'C'
-type Style = 'Regular' | 'Extended' | 'Showcase' | 'Alternate'
+type Style = 'Regular' | 'Extended Art' | 'Showcase' | 'Alternate Alt' | 'Borderless'
 
 type Card = Readonly<{
   name: string
@@ -63,6 +64,24 @@ const TotalValue = (collection: Card[]): number => {
   return sum;
 }
 
+export const queryBuilder = (card: Card) => {
+  //Ugin%2C+the+Spirit+Dragon
+  //expansion + cardname + foil (optional) + art (optional)
+  let query = card.expansion.concat('+').concat(card.name)
+  const regex = /\s/g;
+  query = query.replace(regex, '+').replace(',', '%2C');
+  
+  if (card.foil == true) {
+    query = query.concat('+-+Foil');
+  }
+  
+  if (card.style !== 'Regular') {
+    query = query.concat('+-+').concat(card.style)
+  }
+
+  return query;
+}
+
 export const MTGCollection: React.FC<{}> = () => {
   return (
     <div className='collection'>
@@ -76,7 +95,7 @@ export const MTGCollection: React.FC<{}> = () => {
                 <td>
                   <ul className='card-info'>
                     <li><h1>{e.name}</h1></li>
-                    <li>{e.expansion}, {e.rarity}, {isFoil(e.foil)}</li>
+                    <li>{e.expansion}, {e.rarity}, {e.style}, {isFoil(e.foil)}</li>
                     <li>F2F Price: {e.price}</li>
                     <li>80% F2F: ${ResaleValue(e.price).toFixed(2)}</li>
                   </ul>
@@ -85,6 +104,9 @@ export const MTGCollection: React.FC<{}> = () => {
           </table>
         )
       })}
+      <CardPrice cardname='teferi%2C+hero+of+dominaria' />
+      <CardPrice cardname='Ugin%2C+the+Spirit+Dragon' />
+      <CardPrice cardname='Liliana+of+the+Veil'/>
     </div>
   )
 }
