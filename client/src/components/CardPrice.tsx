@@ -1,31 +1,26 @@
 import React, {useState, useEffect} from 'react';
 
 type CardQuery = {
-  cardname: string;
-  expansion?: string;
-  style?: string;
-  foil?: string
+  query: string;
 }
 
-export const CardPrice: React.FC<CardQuery> = ({ cardname }) => {
-  const [price, setPrice] = useState();
+export const CardPrice: React.FC<CardQuery> = ({ query }) => {
+  const [price, setPrices] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
-      const result = await fetch(`/api/check/${cardname}`).then(res => res.json());
-      setPrice(result.price);
+      const result = await fetch(`/api/check/${query}`).then(res => res.json());
+      setPrices(result.price);
       setIsLoading(false);
     }
 
     fetchData();
-  },[cardname]);
+  },[query]);
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <div>0.00</div>
   }
-
-  console.log(price)
 
   return (
     <div>{price}</div>

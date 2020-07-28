@@ -21,11 +21,13 @@
   "homepage": "https://github.com/patwong92/my-mtg-collection#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "bootstrap": "^4.5.0",
     "cheerio": "^1.0.0-rc.3",
     "concurrently": "^5.2.0",
     "express": "^4.17.1",
     "express-async-await": "^1.1.0",
     "node-fetch": "^2.6.0",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "react-bootstrap": "^1.3.0"
   }
 }

@@ -2,6 +2,8 @@ const express = require('express');
 const fetch = require('node-fetch');
 const router = express.Router();
 const cheerio = require('cheerio');
+const querybuilder = require('../helper/querybuilder');
+const resalevalue = require('../helper/resalevalue');
 
 const re = /\d+\.\d\d/g;
 
@@ -9,26 +11,46 @@ const fmtPrice = (str) => {
   return str.match(re)[0];
 }
 
-router.get('/:name', async(req, res) => {
-  const processData = async (card_name) => {
-    const data = await fetch(`https://www.facetofacegames.com/products/search?q=${card_name}`);
+router.get('/all', async(req, res) => {
+
+  const processData = async (expansion, card_name, foil, style) => {
+    const query = querybuilder(expansion, card_name, foil, style);
+
+    const data = await fetch(`https://www.facetofacegames.com/products/search?q=${query}`);
     const responseData = await data.text();
 
     let $ = cheerio.load(responseData);
     let rawdata = $('.inner').slice(1).eq(0);
     let instock = rawdata.find('.product-price').length;
 
-    if (instock == 1) {
-      res.json({ price: fmtPrice(rawdata.find('.product-price').text().trim()) });
-    } else if (instock == 0) {
-      res.send({ price: fmtPrice(rawdata.find('.no-stock').find('.price').text().trim()) });
-    } else {
-      res.send({ price: '0'});
+    let obj = {
+      name: card_name,
+      expansion: expansion,
+      foil: foil,
+      style: style,
     }
+
+    if (instock == 1) {
+      obj['price'] = fmtPrice(rawdata.find('.product-price').text().trim());
+    } else if (instock == 0) {
+      obj['price'] = fmtPrice(rawdata.find('.no-stock').find('.price').text().trim());
+    } else {
+      obj['price'] = '0';
+    }
+
+    obj['estvalue'] = resalevalue(parseFloat(obj.price))
+
+    return obj;
   }
 
-  processData(req.params.name);
-  res.end;
-});
+  const collection = require('../db/data');
+
+  async function processAllData(item) {
+    return await processData(item.expansion, item.name, item.foil, item.style);
+  }
+
+  const list = await Promise.all(collection.map(processAllData))
+  res.send(list)
+})
 
 module.exports = router;
