@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import './styles/MTGCollection.scss'
+import './styles/MTGCollection.scss';
+import { Table } from 'react-bootstrap';
 
 type Card = {
   name: string
@@ -11,7 +12,7 @@ type Card = {
 }
 
 const isFoil = (condition: boolean): string => {
-  return condition? "Foil" : "Regular";
+  return condition? "Foil" : "Non-Foil";
 }
 
 const TotalValue = (collection: Card[]): string => {
@@ -25,30 +26,38 @@ const TotalValue = (collection: Card[]): string => {
 export const MTGCollection: React.FC<{}> = () => {
   const [totalPrice, setTotalPrice] = useState("");
   const [data, setData] = useState<any[]>([]);
-  // const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
       const result = await fetch('/api/check/all').then(res => res.json());
       setData(result);
       setTotalPrice(TotalValue(result));
+      setIsLoading(false)
     }
     fetchData();
   }, [])
 
+  if (isLoading)
+  {
+    return <>Loading table data...</>
+  }
+
   return (
-    <div className='collection'>
-      <h1>My Collection</h1>
-      <h2>Total Collection Value: {totalPrice}</h2>
-      <table className='table'>
-        <tr>
-          <th>Card Name</th>
-          <th>Expansion</th>
-          <th>Artwork</th>
-          <th>Foil/Non-Foil</th>
-          <th>Facetofacegames Price</th>
-          <th>Estimated Resale Value (80% F2F)</th>
-        </tr>
+    <>
+      <h1 className='page-title'>Total Collection Value (CAD): {totalPrice}</h1>
+      <Table striped bordered hover variant='dark'>
+        <thead>
+          <tr>
+            <th>Card Name</th>
+            <th>Expansion</th>
+            <th>Artwork</th>
+            <th>Foil/Non-Foil</th>
+            <th>Facetofacegames Price</th>
+            <th>Estimated Resale Value (80% F2F)</th>
+          </tr>
+        </thead>
+        <tbody>
         {data.map(e => {
           return (
             <tr>
@@ -61,7 +70,8 @@ export const MTGCollection: React.FC<{}> = () => {
             </tr>
           )
         })}
-      </table>
-    </div>
+        </tbody>
+      </Table>
+    </>
   )
 }
