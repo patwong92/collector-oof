@@ -1,21 +1,30 @@
+const querybuilder = (cardname, expansion) => {
 
-const querybuilder = (expansion, cardname, foil, artstyle) => {
-  //Query string will be formatted as: expansion + cardname + foil (optional) + art (optional)
-//Example: Ugin%2C+the+Spirit+Dragon
+  const dict = [
+    {
+      code: 'DOM',
+      queryname: 'dom'
+    },
+    {
+      code: 'M21',
+      queryname: 'core-set-2021'
+    },
+    {
+      code: '2XM',
+      queryname: 'double-masters'
+    },
+    {
+      code: 'RNA',
+      queryname: 'ravnica-allegiance'
+    }
+  ]
 
-let query = expansion.concat('+').concat(cardname)
-const regex = /\s/g;
-query = query.replace(regex, '+').replace(',', '%2C');
+  let exp_code = dict.find(item => item.code === expansion).queryname
 
-if (foil === true) {
-  query = query.concat('+-+Foil');
-}
+  const regex = /\s/g;
+  let query = cardname.concat('-' + exp_code).replace(regex, '-').replace(',', '').toLowerCase()
 
-if (artstyle !== 'Regular') {
-  query = query.concat('+-+').concat(artstyle)
-}
-
-return query;
+  return query
 }
 
 module.exports = querybuilder;
