@@ -17,24 +17,30 @@ const data = [
   //   style: 'Regular',
   //   foil: true
   // },
-  // {
-  //   name: 'Grim Tutor',
-  //   expansion: 'M21',
-  //   style: 'Regular',
-  //   foil: true
-  // },
+  {
+    name: 'Grim Tutor',
+    expansion: 'M21',
+    style: 'Regular',
+    foil: true
+  },
   {
     name: 'Hydroid Krasis',
     expansion: 'RNA',
     style: 'Regular',
     foil: false
-  },
-  {
-    name: 'Terror of the Peaks',
-    expansion: 'M21',
-    style: 'Regular',
-    foil: false
   }
+  // {
+  //   name: 'Terror of the Peaks',
+  //   expansion: 'M21',
+  //   style: 'Regular',
+  //   foil: false
+  // },
+  // {
+  //   name: 'Crucible of Worlds',
+  //   expansion: 'M19',
+  //   style: 'Regular',
+  //   foil: false
+  // },
   // {
   //   name: 'Parallel Lives',
   //   expansion: 'ISD',

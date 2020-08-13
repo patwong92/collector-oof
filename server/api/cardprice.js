@@ -4,12 +4,6 @@ const querybuilder = require('../helper/querybuilder');
 const resalevalue = require('../helper/resalevalue');
 const puppeteer = require('puppeteer');
 
-const re = /\d+\.\d\d/g;
-
-const fmtPrice = (str) => {
-  return str.match(re)[0];
-}
-
 router.get('/all', async(req, res) => {
 
   const processData = async (card_name, expansion, foil, style) => {
@@ -26,7 +20,7 @@ router.get('/all', async(req, res) => {
 
     const browser = await puppeteer.launch({headless: true});
     const page = await browser.newPage();
-    await page.goto(URL, {waitUntil: 'networkidle0'});
+    await page.goto(URL, {waitUntil: 'networkidle2'});
   
     await Promise.all([
       foil? page.evaluate(() => document.querySelector("input[data-label='Foil']").click()):
@@ -52,8 +46,8 @@ router.get('/all', async(req, res) => {
   }
 
   const list = await Promise.all(collection.map(processAllData))
-  // res.send(list)
-  console.log(list);
+  res.send(list)
+  // console.log(list);
 })
 
 module.exports = router;
