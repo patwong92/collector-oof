@@ -36,6 +36,8 @@ router.get('/all', async(req, res) => {
     obj['price'] = await data.substring(1);
     obj['estvalue'] = resalevalue(parseFloat(data.substring(1)));
 
+    await page.close();
+
     return obj;
   }
 
