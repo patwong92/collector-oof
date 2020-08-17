@@ -1,5 +1,5 @@
 # collector-oof
-Live price tracker for magic card collections
+Price tracker for Magic the Gathering cards
 
 ## Purpose
 This web application fetches card prices from facetotfacegames.com according to card name, expansion, and condition and displays them on a table.
