@@ -7,3 +7,10 @@ The app also calculates the estimated resale value of each card and shows the to
 
 ## Sample Screenshot
 <img src="./miscellaneous/sample.png">
+
+## Future Plans
+* Sorting table based on card name, expansion, or price
+* CSV Upload
+* Reduce loading time for querying data
+* Card image hover
+* Adding or removing card information from the front-end
