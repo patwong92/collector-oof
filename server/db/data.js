@@ -36,12 +36,6 @@ const data = [
     foil: false
   },
   {
-    name: 'Crucible of Worlds',
-    expansion: 'M19',
-    style: 'Regular',
-    foil: false
-  },
-  {
     name: 'Parallel Lives',
     expansion: 'ISD',
     style: 'Regular',

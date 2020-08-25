@@ -15,7 +15,7 @@ router.get('/all', async(req, res) => {
       style: style
     }
 
-    const query = querybuilder(card_name, expansion);
+    const query = querybuilder(card_name, expansion, style);
     let URL = `https://www.facetofacegames.com/${query}/`;
 
     const browser = await puppeteer.launch({headless: true});

@@ -26,6 +26,14 @@ const cardset = [
   {
     code: 'ISD',
     queryname: 'innistrad'
+  },
+  {
+    code: 'WAR',
+    queryname: 'war-of-the-spark'
+  },
+  {
+    code: '5DN',
+    queryname: '5dn'
   }
 ]
 

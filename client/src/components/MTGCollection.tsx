@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import './styles/MTGCollection.scss';
 import { Table } from 'react-bootstrap';
+import { DateNow } from './DateNow';
 
 type Card = {
   name: string
@@ -27,6 +28,7 @@ export const MTGCollection: React.FC<{}> = () => {
   const [totalPrice, setTotalPrice] = useState("");
   const [data, setData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [date, setDate] = useState("");
 
   useEffect(() => {
     async function fetchData() {
@@ -36,6 +38,9 @@ export const MTGCollection: React.FC<{}> = () => {
       setIsLoading(false)
     }
     fetchData();
+
+    let someDate: Date = new Date(Date.now())
+    setDate(someDate.toString());
   }, [])
 
   if (isLoading)
@@ -44,8 +49,8 @@ export const MTGCollection: React.FC<{}> = () => {
   }
 
   return (
-    <>
-      <h1 className='page-title'>Total Collection Value (CAD): {totalPrice}</h1>
+    <div>
+      <h1 className='page-title'>Total Collection Value (CAD): {totalPrice} as of <DateNow date={date}/></h1>
       <Table striped bordered hover variant='dark'>
         <thead>
           <tr>
@@ -72,6 +77,6 @@ export const MTGCollection: React.FC<{}> = () => {
         })}
         </tbody>
       </Table>
-    </>
+    </div>
   )
 }
