@@ -40,7 +40,7 @@ router.get('/all', async (req, res) => {
       await Promise.all([
         foil? page.evaluate(() => document.querySelector("input[data-label='Foil']").click()):
         page.evaluate(() => document.querySelector("input[data-label='Non-Foil']").click()),
-        page.waitFor(1000)
+        page.waitForTimeout(1000)
       ])
     
       let data = await page.evaluate(() => {
