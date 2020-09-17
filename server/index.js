@@ -7,9 +7,10 @@ const path = require('path')
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, './client/build')));
 app.use('/api/check', require('./api/cardprice'));
 app.use('/api/cards', require('./api/cards'));
-app.use(express.static(path.join(__dirname, './client/build')))
+
 
 app.get('/', (req, res) => {
   res.send('Hello world!');
